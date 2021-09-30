@@ -1,0 +1,126 @@
+<!-- <form [formGroup]="myForm">
+  <p>{{ myForm.value | json }}</p>
+
+  <mat-form-field>
+    <mat-label>Iden</mat-label>
+    <input
+      class="p-10"
+      matInput
+      formControlName="firstName"
+      placeholder="label"
+    />
+  </mat-form-field>
+
+  <mat-select
+    style="width: 400px"
+    dropzone
+    multiple
+    placeholder="Languages"
+    formControlName="languages"
+  >
+    <mat-option draggable="true" *ngFor="let item of Langs" [value]="item">
+      {{ item }}
+    </mat-option>
+  </mat-select>
+  <mat-card>
+    <span class="pb-2 between">
+      <button
+        class="transition-all hover:text-red"
+        mat-icon-button
+        matTooltip="Add Entity"
+      >
+        <mat-icon class="text-base">add_circle_outline</mat-icon>
+      </button>
+    </span>
+
+    <span id="title" class="flex w-full h-full overflow-y-scroll">
+      <mat-selection-list
+        class="w-full list"
+        dense
+        cdkDropList
+        #itemList="cdkDropList"
+        [cdkDropListData]="Langs"
+        [cdkDropListConnectedTo]="myForm.value"
+        (cdkDropListDropped)="onDrop($event)"
+      >
+        <mat-list-option cdkDrag *ngFor="let item of Langs">
+          <span class="between">
+            <span>
+              {{ item }}
+            </span>
+            <span class="text-red">
+              <button mat-icon-button matTooltip="Remove Entity">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </span>
+          </span>
+        </mat-list-option>
+      </mat-selection-list>
+    </span>
+  </mat-card>
+</form> -->
+
+<p>{{ myForm.value | json }}</p>
+
+<form [formGroup]="myForm" class="mt-20 form h-full w-48">
+  <div class="list-container">
+    <span class="absolute z-50 ml-28">
+      <button (click)="addClick($event)" mat-icon-button>
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+    </span>
+    <mat-form-field appearance="fill" class="todo-container column-container">
+      <mat-label>Languages</mat-label>
+      <mat-select
+        panelClass="panelClass"
+        class="pr-3"
+        multiple
+        formControlName="languages"
+        placeholder="Languages"
+        (selectionChange)="onSelectionChange($event)"
+      >
+        <div
+          cdkDragBoundary=".form"
+          #mySelect="cdkDropList"
+          [cdkDropListData]="Langs"
+          cdkDropList
+          (cdkDropListDropped)="onDrop($event)"
+          [cdkDropListDisabled]="reorderDisabled"
+        >
+          <!-- <mat-select-trigger>
+            {{
+              myForm.value.languages.value
+                ? myForm.value.languages.value[0]
+                : ""
+            }}
+            <span
+              *ngIf="myForm.value.languages.value?.length > 1"
+              class="example-additional-selection"
+            >
+              (+{{ myForm.value.languages.value.length - 1 }}
+              {{
+                myForm.value.languages.value?.length === 2 ? "other" : "others"
+              }})
+            </span>
+          </mat-select-trigger> -->
+          <mat-option
+            style="cursor: move"
+            *ngFor="let item of Langs"
+            [value]="item"
+            cdkDrag
+            [cdkDragDisabled]="reorderDisabled"
+          >
+            <span>{{ item }}</span>
+          </mat-option>
+        </div>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>
+
+<!-- DONE: Proper reorder (up/down) -->
+<!-- TODO: implement "Add" functionality -->
+<!-- DONE: Reconciliation with all data & form data -->
+<!-- TODO: Add SELECTED ITEMS ON FIRST -->
+
+<!-- TODO: Abstraction -->
